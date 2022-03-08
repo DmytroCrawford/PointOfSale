@@ -3,22 +3,34 @@ package store.model.checkout
 import store.model.items.Item
 
 class SelfCheckout {
+  var zero:Double= 0.0
+  var barstring:String=""
+  var store:Map[String,Item]=Map()
+  var cart:List[Item]=List()
 
   def addItemToStore(barcode: String, item: Item): Unit = {
     // This method adds an item to your store's checkout system. It does not add an item to the customer's cart
+    store += (barcode -> item)
     // TODO
   }
 
   def numberPressed(number: Int): Unit = {
+    this.barstring+=number.toString
     // TODO
   }
 
   def clearPressed(): Unit = {
     // TODO
+    this.barstring=""
   }
 
   def enterPressed(): Unit = {
     // TODO
+    var error:Item = new Item("error", 0.0)
+    this.cart= cart :+ store.getOrElse(barstring, error)
+    clearPressed()
+
+
   }
 
   def checkoutPressed(): Unit = {
@@ -38,12 +50,12 @@ class SelfCheckout {
   }
 
   def displayString(): String = {
-    ""
+    this.barstring
     // TODO
   }
 
   def itemsInCart(): List[Item] = {
-    List()
+    this.cart
   }
 
   def subtotal(): Double = {
@@ -71,8 +83,8 @@ class SelfCheckout {
     // write a similar method in your Test Suite classes.
 
     // Example usage:
-    //val testItem: Item = new Item("test item", 100.0)
-    //this.addItemToStore("472", testItem)
+    val testItem: Item = new Item("test item", 100.0)
+    this.addItemToStore("472", testItem)
   }
 
 }
