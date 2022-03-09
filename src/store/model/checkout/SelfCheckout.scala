@@ -1,6 +1,6 @@
 package store.model.checkout
 
-import store.model.items.Item
+import store.model.items.{Item, SalesTax}
 
 class SelfCheckout {
   var zero:Double= 0.0
@@ -29,8 +29,6 @@ class SelfCheckout {
     var error:Item = new Item("error", 0.0)
     this.cart= cart :+ store.getOrElse(barstring, error)
     clearPressed()
-
-
   }
 
   def checkoutPressed(): Unit = {
@@ -59,31 +57,27 @@ class SelfCheckout {
   }
 
   def subtotal(): Double = {
-    0.0
+    var total=0.0
+    for (items <- cart)
+      total += items.price
+    total
   }
 
   def tax(): Double = {
-    0.0
+    var TaxTo=0.0
+    for (items <- cart)
+      TaxTo += items.tax
+    TaxTo
   }
 
   def total(): Double = {
-    0.0
+    subtotal()+tax()
   }
 
   def prepareStore(): Unit = {
-    // Similar to openMap in the Pale Blue Dot assignment, this method is not required and is
-    // meant to help you run manual tests.
-    //
-    // This method is called by the GUI during setup. Use this method to prepare your
-    // items and call addItemToStore to add their barcodes. Also add any sales/tax/etc to your
-    // items.
-    //
-    // This method will not be called during testing and you should not call it in your tests.
-    // Each test must setup its own items to ensure compatibility in AutoLab. However, you can
-    // write a similar method in your Test Suite classes.
-
-    // Example usage:
+    val cunt: SalesTax = new SalesTax(10)
     val testItem: Item = new Item("test item", 100.0)
+    testItem.addModifier(cunt)
     this.addItemToStore("472", testItem)
   }
 

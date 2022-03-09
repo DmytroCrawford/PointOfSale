@@ -1,9 +1,12 @@
 package store.model.items
 
-class Item (var desc:String, var bas:Double){
+import scala.+:
+
+class Item (var desc:String, var bas:Double)  {
 
   // TODO: Complete this class according to the features listed in the HW document
 
+  var addList:List[Modifier] = List()
 
   def description(): String = {
     this.desc
@@ -14,12 +17,23 @@ class Item (var desc:String, var bas:Double){
   }
 
   def price(): Double = {
-    this.bas
+    var bruh:Double = bas
+    for (mods <- addList){
+      bruh = mods.updatePrice(bas)
+    }
+    bruh
   }
 
-  def addModifier(mod): Unit ={
-
+  def addModifier(modifier: Modifier): Unit ={
+    this.addList = addList :+ modifier
   }
 
+  def tax(): Double={
+    var igh:Double = 0.0
+    for (mods <- addList){
+      igh = mods.computeTax(bas)
+    }
+    igh
+  }
 
 }
