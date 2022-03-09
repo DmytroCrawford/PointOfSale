@@ -1,6 +1,6 @@
 package store.model.checkout
 
-import store.model.items.{Item, SalesTax}
+import store.model.items.{Item, SalesTax, Sale}
 
 class SelfCheckout {
   var zero:Double= 0.0
@@ -59,7 +59,7 @@ class SelfCheckout {
   def subtotal(): Double = {
     var total=0.0
     for (items <- cart)
-      total += items.price
+      total = total + items.price
     total
   }
 
@@ -75,9 +75,14 @@ class SelfCheckout {
   }
 
   def prepareStore(): Unit = {
-    val cunt: SalesTax = new SalesTax(10)
     val testItem: Item = new Item("test item", 100.0)
+
+    val cunt: SalesTax = new SalesTax(10)
     testItem.addModifier(cunt)
+
+    val cunt2: Sale = new Sale(20)
+    testItem.addModifier(cunt2)
+
     this.addItemToStore("472", testItem)
   }
 

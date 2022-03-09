@@ -19,19 +19,19 @@ class Item (var desc:String, var bas:Double)  {
   def price(): Double = {
     var bruh:Double = bas
     for (mods <- addList){
-      bruh = mods.updatePrice(bas)
+      bruh = mods.updatePrice(bruh)
     }
     bruh
   }
 
   def addModifier(modifier: Modifier): Unit ={
-    this.addList = addList :+ modifier
+    addList = addList :+ modifier
   }
 
   def tax(): Double={
     var igh:Double = 0.0
     for (mods <- addList){
-      igh = mods.computeTax(bas)
+      igh += mods.computeTax(price)
     }
     igh
   }

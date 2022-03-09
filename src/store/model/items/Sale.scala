@@ -1,9 +1,9 @@
 package store.model.items
 
 class Sale (SalePercent:Double) extends Modifier () {
-  override def updatePrice(Yup:Double): Double={
-    var off = SalePercent/100 * Yup
-    var finalPrice = Yup - off
+  override def updatePrice(Price:Double): Double={
+    var off = SalePercent/100 * Price
+    var finalPrice = Price - off
     finalPrice
   }
   override def computeTax(double:Double):Double = {
